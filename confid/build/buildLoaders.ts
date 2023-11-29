@@ -2,6 +2,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { ModuleOptions } from "webpack";
 import { BuildOptions } from "./types/types";
 import ReactRefreshTypeScript from "react-refresh-typescript";
+import { buildBabelLoader } from "./babel/buildBabelLoader";
 
 export function buildLoader(options: BuildOptions): ModuleOptions["rules"] {
   const isDev = options.mode === "development";
@@ -29,19 +30,31 @@ export function buildLoader(options: BuildOptions): ModuleOptions["rules"] {
         "sass-loader",
       ],
     },
-    {
-      test: /\.tsx?$/,
-      use: {
-        loader: "ts-loader",
-        options: {
-          getCustomTransformers: () => ({
-            before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
-          }),
-          transpileOnly: true,
-        },
-      },
-      exclude: /node_modules/,
-    },
+    // {
+    //   test: /\.tsx?$/,
+    //   use: {
+    //     loader: "ts-loader",
+    //     options: {
+    //       getCustomTransformers: () => ({
+    //         before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+    //       }),
+    //       transpileOnly: true,
+    //     },
+    //   },
+    //   exclude: /node_modules/,
+    // },
+
+    // {
+    //   test: /\.tsx?$/,
+    //   exclude: /node_modules/,
+    //   use: {
+    //     loader: "babel-loader",
+    //     options: {
+    //       presets: ["@babel/preset-env"],
+    //     },
+    //   },
+    // },
+    buildBabelLoader(options),
 
     {
       test: /\.(png|jpg|jpeg|gif)$/i,
