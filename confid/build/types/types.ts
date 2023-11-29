@@ -3,12 +3,16 @@ export interface BuildPaths {
   output: string;
   html: string;
   src: string;
+  public: string;
 }
 
 export type BuildMode = "development" | "production";
+export type BuildPlatform = "desktop" | "mobile";
+
 export interface BuildOptions {
-  port: number;
+  port?: number;
   paths: BuildPaths;
-  mode: BuildMode;
+  mode?: BuildMode;
   analyzer?: boolean;
+  platform?: BuildPlatform;
 }
